@@ -2,8 +2,8 @@
   <div v-if="favouriteQuotes && favouriteQuotes.length > 0">
     <h3>Favourite Quotes</h3>
     <ul>
-      <li v-for="quote in favouriteQuotes" :key="id">
-        "{{ quote.content }}" ------ {{ quote.author }}
+      <li v-for="(quote, id) in favouriteQuotes" :key="id">
+        "{{ quote.quote }}" ------ {{ quote.author }}
       </li>
     </ul>
   </div>

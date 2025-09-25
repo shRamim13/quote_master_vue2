@@ -12,7 +12,7 @@
     <QuoteDisplay
       v-if="currentQuote"
       :currentQuote="currentQuote"
-      :isQouteInserted="isQouteInserted"
+      :isQuoteInserted="isQuoteInserted"
       :quoteInsertCount="quoteInsertCount"
       :addToFavouriteTrigger="addToFavouriteTrigger"
       @add-to-favourite="addToFavouriteCart"
@@ -39,7 +39,7 @@ export default {
       favouriteQuotes: [],
       spinner: false,
       error: null,
-      isQouteInserted: false,
+      isQuoteInserted: false,
       quoteInsertCount: 0,
       showFavourites: false,
       addToFavouriteTrigger: 0,
@@ -50,12 +50,12 @@ export default {
       this.error = null;
       this.spinner = true;
       this.quoteInsertCount = 0;
-      this.trigger = 0;
+      this.addToFavouriteTrigger = 0;
       try {
         this.currentQuote = null;
         const response = await fetch("https://api.quotable.io/random");
-        const polisedResponse = await response.json();
-        this.currentQuote = polisedResponse;
+        const polishedResponse = await response.json();
+        this.currentQuote = polishedResponse;
       } catch (error) {
         this.error = "Try Again";
       } finally {
@@ -69,17 +69,18 @@ export default {
           this.currentQuote.author == quote.author &&
           this.currentQuote.content == quote.content
         ) {
-          this.isQouteInserted = true;
+          this.isQuoteInserted = true;
           break;
         }
       }
-      if (!this.isQouteInserted && this.quoteInsertCount == 0) {
+      if (!this.isQuoteInserted && this.quoteInsertCount == 0) {
         this.favouriteQuotes.push({
+          id: this.currentQuote._id,
           author: this.currentQuote.author,
-          content: this.currentQuote.content,
+          quote: this.currentQuote.content,
         });
         this.quoteInsertCount++;
-        this.isQouteInserted = false;
+        this.isQuoteInserted = false;
       }
     },
     toggleFavourites() {
