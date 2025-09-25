@@ -2,9 +2,11 @@
   <div class="akm">
     <h1>Quote Manager</h1>
 
-    <button :disabled="spinner" @click="fetchRandomQuote">
-      Generate New Quote
-    </button>
+    <QuoteButton
+      @click.native="fetchRandomQuote"
+      :disabled="spinner"
+      label="Generate New Quote"
+    />
 
     <div v-if="spinner">Loading...</div>
     <div v-if="error">{{ error }}</div>
@@ -19,20 +21,28 @@
     />
 
     <h3>Show all favourites</h3>
-    <button @click="toggleFavourites">
-      {{ showFavourites ? "Hide" : "Show" }}
-    </button>
 
-    <FavouriteList v-if="showFavourites" :favouriteQuotes="favouriteQuotes" />
+    <QuoteButton
+      :label="showFavourites ? 'Hide' : 'Show'"
+      :disabled="spinner"
+      @click.native="toggleFavourites"
+    />
+
+    <FavouriteList
+      v-if="showFavourites"
+      :favouriteQuotes="favouriteQuotes"
+      @remove-favourite="deleteFavouriteQuote"
+    />
   </div>
 </template>
 
 <script>
 import QuoteDisplay from "@/components/QuoteDisplay.vue";
 import FavouriteList from "@/components/FavouriteList.vue";
+import QuoteButton from "@/components/QuoteButton.vue";
 
 export default {
-  components: { QuoteDisplay, FavouriteList },
+  components: { QuoteDisplay, FavouriteList, QuoteButton },
   data() {
     return {
       currentQuote: null,
@@ -85,6 +95,9 @@ export default {
     },
     toggleFavourites() {
       this.showFavourites = !this.showFavourites;
+    },
+    deleteFavouriteQuote(index) {
+      this.favouriteQuotes.splice(index, 1);
     },
   },
 };

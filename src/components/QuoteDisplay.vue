@@ -2,8 +2,10 @@
   <div v-if="currentQuote">
     <p><strong>Quote:</strong> {{ currentQuote.content }}</p>
     <p><strong>Author:</strong> {{ currentQuote.author }}</p>
-    <button @click="$emit('add-to-favourite')">Add to Favourite</button>
-
+    <QuoteButton
+      label="Add to Favourite"
+      @buttonClicked="$emit('add-to-favourite')"
+    />
     <p
       v-if="
         isQuoteInserted ||
@@ -17,8 +19,11 @@
 </template>
 
 <script>
+import QuoteButton from "./QuoteButton.vue";
+
 export default {
   name: "QuoteDisplay",
+  components: { QuoteButton },
   props: {
     currentQuote: Object,
     isQuoteInserted: Boolean,

@@ -1,10 +1,13 @@
 <template>
-  <div v-if="favouriteQuotes && favouriteQuotes.length > 0">
+  <div v-if="favouriteQuotes.length">
     <h3>Favourite Quotes</h3>
     <ul>
-      <li v-for="(quote, id) in favouriteQuotes" :key="id">
-        "{{ quote.quote }}" ------ {{ quote.author }}
-      </li>
+      <FavouriteItem
+        v-for="(item, index) in favouriteQuotes"
+        :key="index"
+        :quote="item"
+        @delete-item="$emit('remove-favourite', index)"
+      />
     </ul>
   </div>
   <div v-else>
@@ -13,19 +16,11 @@
 </template>
 
 <script>
+import FavouriteItem from "./FavouriteItem.vue";
+
 export default {
-  props: {
-    favouriteQuotes: Array,
-  },
+  name: "FavouriteList",
+  props: { favouriteQuotes: Array },
+  components: { FavouriteItem },
 };
 </script>
-
-<style scoped>
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  margin: 5px 0;
-}
-</style>
