@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentQuote" class="quote-display">
+  <div  class="quote-display">
     <div class="quote-card">
       <div class="quote-content">
         <div class="quote-icon">⚡</div>

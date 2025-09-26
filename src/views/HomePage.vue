@@ -31,15 +31,15 @@
               class="retry-btn"
             />
           </div>
-
-          <QuoteDisplay
-            v-if="currentQuote"
-            :currentQuote="currentQuote"
-            :isQuoteInserted="isQuoteInserted"
-            :quoteInsertCount="quoteInsertCount"
-            :addToFavouriteTrigger="addToFavouriteTrigger"
-            @add-to-favourite="addToFavouriteCart"
-          />
+          <div v-if="currentQuote">
+            <QuoteDisplay
+              :currentQuote="currentQuote"
+              :isQuoteInserted="isQuoteInserted"
+              :quoteInsertCount="quoteInsertCount"
+              :addToFavouriteTrigger="addToFavouriteTrigger"
+              @add-to-favourite="addToFavouriteCart"
+            />
+          </div>
         </div>
 
         <div class="favorites-section">
