@@ -63,8 +63,9 @@ export default {
       this.addToFavouriteTrigger = 0;
       try {
         this.currentQuote = null;
-        const response = await fetch("https://api.quotable.io/random");
+        const response = await fetch("/api/qotd");
         const polishedResponse = await response.json();
+        console.log(polishedResponse);
         this.currentQuote = polishedResponse;
       } catch (error) {
         this.error = "Try Again";
@@ -76,8 +77,8 @@ export default {
       this.addToFavouriteTrigger++;
       for (const quote in this.favouriteQuotes) {
         if (
-          this.currentQuote.author == quote.author &&
-          this.currentQuote.content == quote.content
+          this.currentQuote.quote.author == quote.author &&
+          this.currentQuote.quote.body == quote.quote
         ) {
           this.isQuoteInserted = true;
           break;
@@ -85,9 +86,9 @@ export default {
       }
       if (!this.isQuoteInserted && this.quoteInsertCount == 0) {
         this.favouriteQuotes.push({
-          id: this.currentQuote._id,
-          author: this.currentQuote.author,
-          quote: this.currentQuote.content,
+          id: this.currentQuote.quote.id,
+          author: this.currentQuote.quote.author,
+          quote: this.currentQuote.quote.body,
         });
         this.quoteInsertCount++;
         this.isQuoteInserted = false;
@@ -109,3 +110,6 @@ export default {
   margin-top: 50px;
 }
 </style>
+
+
+

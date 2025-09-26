@@ -1,7 +1,7 @@
 <template>
   <div v-if="currentQuote">
-    <p><strong>Quote:</strong> {{ currentQuote.content }}</p>
-    <p><strong>Author:</strong> {{ currentQuote.author }}</p>
+    <p><strong>Quote:</strong> {{ currentQuote.quote.body }}</p>
+    <p><strong>Author:</strong> {{ currentQuote.quote.author }}</p>
     <QuoteButton
       label="Add to Favourite"
       @buttonClicked="$emit('add-to-favourite')"
