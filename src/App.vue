@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <home-page />
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/favourites">Favourites</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <script>
-import HomePage from "./views/HomePage.vue";
 export default {
-  components: {
-    HomePage,
-  },
+  name: "App"
 };
 </script>
 
@@ -17,6 +18,23 @@ export default {
 #app {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   text-align: center;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+nav a:hover, nav a.router-link-active {
+  background: #0056b3;
 }
 </style>
 .

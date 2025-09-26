@@ -2,11 +2,9 @@
   <div class="akm">
     <h1>Quote Manager</h1>
 
-    <QuoteButton
-      @click.native="fetchRandomQuote"
-      :disabled="spinner"
-      label="Generate New Quote"
-    />
+    <button :disabled="spinner" @click="fetchRandomQuote">
+      Generate New Quote
+    </button>
 
     <div v-if="spinner">Loading...</div>
     <div v-if="error">{{ error }}</div>
@@ -20,29 +18,17 @@
       @add-to-favourite="addToFavouriteCart"
     />
 
-    <h3>Show all favourites</h3>
-
-    <QuoteButton
-      :label="showFavourites ? 'Hide' : 'Show'"
-      :disabled="spinner"
-      @click.native="toggleFavourites"
-    />
-
-    <FavouriteList
-      v-if="showFavourites"
-      :favouriteQuotes="favouriteQuotes"
-      @remove-favourite="deleteFavouriteQuote"
-    />
+    <router-link to="/favourites" class="favourites-link">
+      View Favourites ({{ favouriteQuotes.length }})
+    </router-link>
   </div>
 </template>
 
 <script>
 import QuoteDisplay from "@/components/QuoteDisplay.vue";
-import FavouriteList from "@/components/FavouriteList.vue";
-import QuoteButton from "@/components/QuoteButton.vue";
 
 export default {
-  components: { QuoteDisplay, FavouriteList, QuoteButton },
+  components: { QuoteDisplay },
   data() {
     return {
       currentQuote: null,
@@ -51,11 +37,20 @@ export default {
       error: null,
       isQuoteInserted: false,
       quoteInsertCount: 0,
-      showFavourites: false,
       addToFavouriteTrigger: 0,
     };
   },
+  created() {
+    this.loadFavourites();
+  },
   methods: {
+    loadFavourites() {
+      const saved = localStorage.getItem('favouriteQuotes');
+      this.favouriteQuotes = saved ? JSON.parse(saved) : [];
+    },
+    saveFavourites() {
+      localStorage.setItem('favouriteQuotes', JSON.stringify(this.favouriteQuotes));
+    },
     async fetchRandomQuote() {
       this.error = null;
       this.spinner = true;
@@ -63,9 +58,8 @@ export default {
       this.addToFavouriteTrigger = 0;
       try {
         this.currentQuote = null;
-        const response = await fetch("https://api.quotable.io/random");
-        const polishedResponse = await response.json();
-        this.currentQuote = polishedResponse;
+        const response = await fetch("https://favqs.com/api/qotd");
+        this.currentQuote = await response.json();
       } catch (error) {
         this.error = "Try Again";
       } finally {
@@ -77,7 +71,7 @@ export default {
       for (const quote in this.favouriteQuotes) {
         if (
           this.currentQuote.author == quote.author &&
-          this.currentQuote.content == quote.content
+          this.currentQuote.body == quote.body
         ) {
           this.isQuoteInserted = true;
           break;
@@ -85,9 +79,9 @@ export default {
       }
       if (!this.isQuoteInserted && this.quoteInsertCount == 0) {
         this.favouriteQuotes.push({
-          id: this.currentQuote._id,
+          // id: this.currentQuote._id,
           author: this.currentQuote.author,
-          quote: this.currentQuote.content,
+          quote: this.currentQuote.body,
         });
         this.quoteInsertCount++;
         this.isQuoteInserted = false;
@@ -95,9 +89,6 @@ export default {
     },
     toggleFavourites() {
       this.showFavourites = !this.showFavourites;
-    },
-    deleteFavouriteQuote(index) {
-      this.favouriteQuotes.splice(index, 1);
     },
   },
 };
@@ -107,5 +98,19 @@ export default {
 .akm {
   text-align: center;
   margin-top: 50px;
+}
+
+.favourites-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.favourites-link:hover {
+  background: #218838;
 }
 </style>

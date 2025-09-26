@@ -1,7 +1,7 @@
 <template>
   <li>
     "{{ quote.quote }}" — <em>{{ quote.author }}</em>
-    <QuoteButton label="Delete" @buttonClicked="$emit('delete-item')" />
+    <QuoteButton label="Delete Favourite" @buttonClicked="$emit('delete-item')" />
   </li>
 </template>
 
