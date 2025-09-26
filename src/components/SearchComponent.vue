@@ -1,29 +1,28 @@
 <template>
-    <div class="search-section">
-      <input 
-        :value="searchQuery"
-        @input="handleInput"
-        type="text" 
-        placeholder="🔍 SEARCH BRUTAL QUOTES..."
-        class="brutal-search"
-      />
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      searchQuery: { type: String, default: '' }
+  <div class="search-section">
+    <input
+      :value="searchQuery"
+      @input="handleInput"
+      type="text"
+      placeholder="🔍 SEARCH BRUTAL QUOTES..."
+      class="brutal-search"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    searchQuery: { type: String, default: "" },
+  },
+  methods: {
+    handleInput(event) {
+      const value = event.target.value;
+      this.$emit("input", value); //  emit input event
     },
-    methods: {
-      handleInput(event) {
-        const value = event.target.value
-        this.$emit('input', value)  // 👈 Emit 'input' event in Vue 2
-      }
-    }
-  }
-  </script>
-  
+  },
+};
+</script>
 
 <style scoped>
 .search-section {

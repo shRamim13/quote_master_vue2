@@ -7,6 +7,7 @@
         :quote="item"
         @delete-item="$emit('remove-favourite', index)"
       />
+      
     </div>
     <div v-else class="no-favorites">
       <p>⚡ NO BRUTAL QUOTES IN COLLECTION YET</p>
