@@ -25,7 +25,7 @@
           <p class="brutal-quote-text">"{{ quote.quote }}"</p>
           <p class="brutal-quote-author">— {{ quote.author }}</p>
         </div>
-        <button @click="removeFavorite(index)" class="brutal-delete-btn">⚡ DESTROY</button>
+        <QuoteButton @buttonClicked="removeFavorite(index)" label="⚡ DESTROY"   class="brutal-delete-btn"/>
       </div>
     </div>
 
@@ -44,8 +44,10 @@
 </template>
 
 <script>
+import QuoteButton from "@/components/QuoteButton.vue";
 export default {
   name: 'FavoritesPage',
+  components: { QuoteButton },
   data() {
     return {
       searchQuery: '',
