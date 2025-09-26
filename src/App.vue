@@ -1,148 +1,62 @@
 <template>
   <div id="app">
-    <home-page />
+    <router-view />
   </div>
 </template>
 
 <script>
-import HomePage from "./views/HomePage.vue";
 export default {
-  components: {
-    HomePage,
-  },
+  name: 'App'
 };
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+  min-height: 100vh;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
 #app {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#app::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+  z-index: -1;
 }
 </style>
-.
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-. 
-.
-. 
-. 
-. . 
-. 
-. 
-. 
-. 
-
-<!-- <template>
-  <div id="app">
-    <h1>Quote Manager</h1>
-    <button v-bind:disabled="spinner" @click="fecthRandomQuote">
-      generate new quote
-    </button>
-    
-    <div v-if="spinner">Loading ......</div>
-    <div v-if="error">{{ error }}</div>
-    
-    <div v-if="currentQuote">
-      <p>Quote :</p>
-      <p>{{ currentQuote.content }}</p>
-      <p>Author:</p>
-      <p>{{ currentQuote.author }}</p>
-      <button @click="addToFavouriteCart">add to Favourite</button>
-      <p v-if="isInserted || (insertCount == 1 && trigger == 1)">Inserted</p>
-      <p v-if="trigger > 1">Already Inserted</p>
-    </div>
-
-    <p>Show all favourite</p>
-    <button  @click="show">
-      {{ ishowFavouriteQuote ? "Hide" : "Show" }}
-    </button>
-    <div v-if="currentQuote && ishowFavouriteQuote">
-      <ul>
-        <li v-for="value in favouriteQuotes" :key="value.id">{{ value }}</li>
-      </ul>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: "App",
-  components: {},
-  data() {
-    return {
-      currentQuote: null,
-      favouriteQuotes: [],
-      spinner: false,
-      error: null,
-      isInserted: false,
-      insertCount: 0,
-      ishowFavouriteQuote: false,
-      trigger: 0,
-    };
-  },
-  methods: {
-    async fecthRandomQuote() {
-      this.error = null;
-      this.spinner = true;
-      // this. ishowFavouriteQuote = false;
-      this.insertCount = 0;
-      this.trigger = 0;
-      try {
-        this.currentQuote = null;
-        const response = await fetch("https://api.quotable.io/random");
-        const polisedResponse = await response.json();
-        this.currentQuote = polisedResponse;
-      } catch (error) {
-        this.error = "Try Again";
-        console.log("Try again");
-      } finally {
-        this.spinner = false;
-      }
-    },
-    addToFavouriteCart: function () {
-      this.trigger++;
-      for (const quote in this.favouriteQuotes) {
-        if (
-          this.currentQuote.author == quote.author &&
-          this.currentQuote.content == quote.content
-        ) {
-          this.isInserted = true;
-          break;
-        }
-      }
-      if (!this.isInserted && this.insertCount == 0) {
-        this.favouriteQuotes.push({
-          author: this.currentQuote.author,
-          quote: this.currentQuote.content,
-        });
-        this.insertCount++;
-        this.isInserted = false;
-      }
-    },
-    show: function () {
-      this.ishowFavouriteQuote = !this.ishowFavouriteQuote;
-    },
-  },
-};
-</script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style> -->
