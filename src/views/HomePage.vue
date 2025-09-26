@@ -99,18 +99,4 @@ export default {
   text-align: center;
   margin-top: 50px;
 }
-
-.favourites-link {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #28a745;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.favourites-link:hover {
-  background: #218838;
-}
 </style>

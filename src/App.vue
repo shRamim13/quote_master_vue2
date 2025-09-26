@@ -20,22 +20,6 @@ export default {
   text-align: center;
 }
 
-nav {
-  margin-bottom: 20px;
-}
-
-nav a {
-  margin: 0 10px;
-  padding: 10px 20px;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-nav a:hover, nav a.router-link-active {
-  background: #0056b3;
-}
 </style>
 .
 . 

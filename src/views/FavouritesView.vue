@@ -1,7 +1,7 @@
 <template>
-  <div class="favourites-page">
+  <div class="ssd">
     <h1>Favourite Quotes</h1>
-    <router-link to="/" class="back-link">← Back to Home</router-link>
+    <router-link to="/" >← Back to Home</router-link>
     
     <FavouriteList :favouriteQuotes="favouriteQuotes" />
   </div>
@@ -31,22 +31,10 @@ export default {
 </script>
 
 <style scoped>
-.favourites-page {
+.ssd{
   text-align: center;
   margin-top: 50px;
 }
 
-.back-link {
-  display: inline-block;
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
 
-.back-link:hover {
-  background: #0056b3;
-}
 </style>
