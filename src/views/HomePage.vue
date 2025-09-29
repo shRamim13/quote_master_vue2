@@ -95,7 +95,7 @@ export default {
       this.addToFavouriteTrigger = 0;
       try {
         this.currentQuote = null;
-        const response = await fetch("https://favqs.com/api/qotd");
+        const response = await fetch("/api/qotd");
         const polishedResponse = await response.json();
         console.log(polishedResponse);
         this.currentQuote = polishedResponse;
