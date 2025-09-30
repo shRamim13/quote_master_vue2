@@ -16,12 +16,11 @@ export default {
   name: "FavoriteItem",
   components: { QuoteButton },
   props: { 
-    quote: Object,
-    index: Number
+    quote: Object
   },
   methods: {
     removeFavorite() {
-      this.$emit('delete-item', this.index);
+      this.$emit('delete-item');
     }
   }
 };
