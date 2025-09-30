@@ -14,10 +14,3 @@ export default {
 };
 </script>
 
-<style scoped>
-button {
-  margin: 5px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-</style>
