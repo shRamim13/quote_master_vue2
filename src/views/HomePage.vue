@@ -37,22 +37,18 @@
     <div>
       <div>
         <h3>Favorites</h3>
-        <p>{{ store.favoriteQuotes.length }} Saved Quotes</p>
+        <p>{{ favoriteQuotes.length }} Saved Quotes</p>
       </div>
 
       <QuoteButton
         :label="
-          store.favoriteQuotes.length > 0
+          favoriteQuotes.length > 0
             ? 'View Favorites'
             : 'No Quotes Yet'
         "
-        :disabled="spinner || store.favoriteQuotes.length === 0"
+        :disabled="spinner || favoriteQuotes.length === 0"
         @buttonClicked="goToFavorites"
       />
-      
-      <div>
-        <router-link to="/logs">View Activity Logs</router-link>
-      </div>
     </div>
   </div>
 </template>
@@ -60,13 +56,13 @@
 <script>
 import QuoteDisplay from "@/components/QuoteDisplay.vue";
 import QuoteButton from "@/components/QuoteButton.vue";
-import { store } from "@/store.js";
 
 export default {
   components: { QuoteDisplay, QuoteButton },
   data() {
     return {
       currentQuote: null,
+      favoriteQuotes: [],
       spinner: false,
       error: null,
       isQuoteInserted: false,
@@ -75,10 +71,8 @@ export default {
       addToFavoriteTrigger: 0,
     };
   },
-  computed: {
-    store() {
-      return store;
-    }
+  created() {
+    this.loadFavorites();
   },
   methods: {
     async fetchRandomQuote() {
@@ -86,15 +80,13 @@ export default {
       this.spinner = true;
       this.quoteInsertCount = 0;
       this.addToFavoriteTrigger = 0;
-      store.addLog('Generating new quote...');
       try {
         this.currentQuote = null;
         const response = await fetch("/api/qotd");
         const polishedResponse = await response.json();
-        store.addLog(`Quote generated: ${polishedResponse.quote.body}`);
+        console.log(polishedResponse);
         this.currentQuote = polishedResponse;
       } catch (error) {
-        store.addLog(`Error generating quote: ${error.message}`);
         this.error = "Try Again";
       } finally {
         this.spinner = false;
@@ -102,7 +94,7 @@ export default {
     },
     addToFavoriteCart: function () {
       this.addToFavoriteTrigger++;
-      for (const quote in store.favoriteQuotes) {
+      for (const quote in this.favoriteQuotes) {
         if (
           this.currentQuote.quote.author == quote.author &&
           this.currentQuote.quote.body == quote.quote
@@ -112,31 +104,35 @@ export default {
         }
       }
       if (!this.isQuoteInserted && this.quoteInsertCount == 0) {
-        const newFavorite = {
+        this.favoriteQuotes.push({
           id: this.currentQuote.quote.id,
           author: this.currentQuote.quote.author,
           quote: this.currentQuote.quote.body,
-        };
-        store.favoriteQuotes.push(newFavorite);
-        store.addLog(`Quote added to favorites: ${newFavorite.quote}`);
-        store.addLog(`Total favorites: ${store.favoriteQuotes.length}`);
+        });
         this.quoteInsertCount++;
         this.isQuoteInserted = false;
-      } else {
-        store.addLog('Quote already in favorites or already added');
+        this.saveFavorites();
       }
     },
     toggleFavorites() {
       this.showFavorites = !this.showFavorites;
     },
     deleteFavoriteQuote(index) {
-      store.favoriteQuotes.splice(index, 1);
+      this.favoriteQuotes.splice(index, 1);
     },
     goToFavorites() {
-      store.addLog('Going to favorites page');
-      store.addLog(`Current favorites count: ${store.favoriteQuotes.length}`);
       this.$router.push("/favorites");
-    }
+    },
+    loadFavorites() {
+      const saved = localStorage.getItem("favoriteQuotes");
+      this.favoriteQuotes = saved ? JSON.parse(saved) : [];
+    },
+    saveFavorites() {
+      localStorage.setItem(
+        "favoriteQuotes",
+        JSON.stringify(this.favoriteQuotes)
+      );
+    },
   },
 };
 </script>

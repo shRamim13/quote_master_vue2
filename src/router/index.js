@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
 import FavoritesPage from '@/views/FavoritesPage.vue'
-import LogsPage from '@/views/LogsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -16,11 +15,6 @@ const routes = [
     path: '/favorites',
     name: 'Favorites',
     component: FavoritesPage
-  },
-  {
-    path: '/logs',
-    name: 'Logs',
-    component: LogsPage
   }
 ]
 

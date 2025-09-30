@@ -26,7 +26,6 @@
 <script>
 import SearchComponent from "@/components/SearchComponent.vue";
 import FavoriteList from "@/components/FavoriteList.vue";
-import { store } from "@/store.js";
 
 export default {
   name: 'FavoritesPage',
@@ -36,46 +35,42 @@ export default {
   },
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      favoriteQuotes: []
     }
   },
   computed: {
-    store() {
-      return store;
-    },
     filteredFavorites() {
       if (!this.searchQuery) {
-        return store.favoriteQuotes
+        return this.favoriteQuotes
       }
       
       const query = this.searchQuery.toLowerCase()
-      const filtered = store.favoriteQuotes.filter(quote => 
+      return this.favoriteQuotes.filter(quote => 
         quote.quote.toLowerCase().includes(query) ||
         quote.author.toLowerCase().includes(query)
       )
-      store.addLog(`Search query: ${this.searchQuery}`);
-      store.addLog(`Filtered results: ${filtered.length}`);
-      return filtered
     }
   },
   created() {
-    store.addLog('Favorites page loaded');
-    store.addLog(`Current favorites: ${store.favoriteQuotes.length}`);
+    this.loadFavorites()
   },
   methods: {
+    loadFavorites() {
+      const saved = localStorage.getItem('favoriteQuotes')
+      this.favoriteQuotes = saved ? JSON.parse(saved) : []
+    },
     removeFavorite(index) {
       if (this.searchQuery) {
         const filteredQuote = this.filteredFavorites[index]
-        store.addLog(`Deleting quote: ${filteredQuote.quote}`);
-        const originalIndex = store.favoriteQuotes.findIndex(quote => 
+        const originalIndex = this.favoriteQuotes.findIndex(quote => 
           quote.id === filteredQuote.id
         )
-        store.favoriteQuotes.splice(originalIndex, 1)
+        this.favoriteQuotes.splice(originalIndex, 1)
       } else {
-        const quoteToDelete = store.favoriteQuotes[index];
-        store.addLog(`Deleting quote: ${quoteToDelete.quote}`);
-        store.favoriteQuotes.splice(index, 1)
+        this.favoriteQuotes.splice(index, 1)
       }
+      localStorage.setItem('favoriteQuotes', JSON.stringify(this.favoriteQuotes))
     }
   }
 }
