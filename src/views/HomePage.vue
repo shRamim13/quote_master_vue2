@@ -76,7 +76,7 @@ export default {
     ...mapState(['favoriteQuotes', 'currentQuote', 'spinner', 'error'])
   },
   methods: {
-    ...mapActions(['fetchRandomQuote', 'addLog', 'addFavorite']),
+    ...mapActions(['fetchRandomQuote']),
     
     async fetchRandomQuote() {
       this.quoteInsertCount = 0;
@@ -105,12 +105,12 @@ export default {
           author: this.currentQuote.quote.author,
           quote: this.currentQuote.quote.body,
         };
-        this.addFavorite(newFavorite);
-        this.addLog(`Quote added to favorites: ${newFavorite.quote}`);
-        this.addLog(`Total favorites: ${this.favoriteQuotes.length + 1}`);
+        this.$store.commit('ADD_FAVORITE', newFavorite);
+        this.$store.commit('ADD_LOG', `Quote added to favorites: ${newFavorite.quote}`);
+        this.$store.commit('ADD_LOG', `Total favorites: ${this.favoriteQuotes.length + 1}`);
         this.quoteInsertCount++;
       } else {
-        this.addLog('Quote already in favorites or already added');
+        this.$store.commit('ADD_LOG', 'Quote already in favorites or already added');
       }
     },
     toggleFavorites() {
@@ -120,8 +120,8 @@ export default {
       this.$store.commit('REMOVE_FAVORITE', index);
     },
     goToFavorites() {
-      this.addLog('Going to favorites page');
-      this.addLog(`Current favorites count: ${this.favoriteQuotes.length}`);
+      this.$store.commit('ADD_LOG', 'Going to favorites page');
+      this.$store.commit('ADD_LOG', `Current favorites count: ${this.favoriteQuotes.length}`);
       this.$router.push("/favorites");
     }
   },

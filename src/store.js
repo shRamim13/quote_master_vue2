@@ -61,22 +61,6 @@ export default new Vuex.Store({
       } finally {
         commit('SET_SPINNER', false);
       }
-    },
-    
-    addLog({ commit }, message) {
-      commit('ADD_LOG', message);
-    },
-    
-    clearLogs({ commit }) {
-      commit('CLEAR_LOGS');
-    },
-    
-    addFavorite({ commit }, quote) {
-      commit('ADD_FAVORITE', quote);
-    },
-    
-    removeFavorite({ commit }, index) {
-      commit('REMOVE_FAVORITE', index);
     }
   }
 })

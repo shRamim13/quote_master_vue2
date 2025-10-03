@@ -26,7 +26,7 @@
 <script>
 import SearchComponent from "@/components/SearchComponent.vue";
 import FavoriteList from "@/components/FavoriteList.vue";
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'FavoritesPage',
@@ -51,30 +51,29 @@ export default {
         quote.quote.toLowerCase().includes(query) ||
         quote.author.toLowerCase().includes(query)
       )
-      this.addLog(`Search query: ${this.searchQuery}`);
-      this.addLog(`Filtered results: ${filtered.length}`);
+      this.$store.commit('ADD_LOG', `Search query: ${this.searchQuery}`);
+      this.$store.commit('ADD_LOG', `Filtered results: ${filtered.length}`);
       return filtered
     }
   },
   created() {
-    this.addLog('Favorites page loaded');
-    this.addLog(`Current favorites: ${this.favoriteQuotes.length}`);
+    this.$store.commit('ADD_LOG', 'Favorites page loaded');
+    this.$store.commit('ADD_LOG', `Current favorites: ${this.favoriteQuotes.length}`);
   },
   methods: {
-    ...mapActions(['addLog']),
     
     removeFavorite(index) {
       if (this.searchQuery) {
         const filteredQuote = this.filteredFavorites[index]
-        this.addLog(`Deleting quote: ${filteredQuote.quote}`);
+        this.$store.commit('ADD_LOG', `Deleting quote: ${filteredQuote.quote}`);
         const originalIndex = this.favoriteQuotes.findIndex(quote => 
           quote.id === filteredQuote.id
         )
-        this.$store.dispatch('removeFavorite', originalIndex)
+        this.$store.commit('REMOVE_FAVORITE', originalIndex)
       } else {
         const quoteToDelete = this.favoriteQuotes[index];
-        this.addLog(`Deleting quote: ${quoteToDelete.quote}`);
-        this.$store.dispatch('removeFavorite', index)
+        this.$store.commit('ADD_LOG', `Deleting quote: ${quoteToDelete.quote}`);
+        this.$store.commit('REMOVE_FAVORITE', index)
       }
     }
   }

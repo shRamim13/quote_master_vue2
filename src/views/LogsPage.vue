@@ -24,7 +24,7 @@
 
 <script>
 import QuoteButton from "@/components/QuoteButton.vue";
-import { mapState, mapActions } from 'vuex';
+import { mapState} from 'vuex';
 
 export default {
   name: "LogsPage",
@@ -33,10 +33,13 @@ export default {
     ...mapState(['logs'])
   },
   methods: {
-    ...mapActions(['addLog', 'clearLogs'])
+    clearLogs() {
+      this.$store.commit("CLEAR_LOGS");
+      this.$store.commit("ADD_LOG", "Logs cleared");
+    }
   },
   created() {
-    this.addLog("Logs page loaded");
+    this.$store.commit("ADD_LOG", "Logs page loaded");
   }
 };
 </script>
