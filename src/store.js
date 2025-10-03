@@ -51,7 +51,7 @@ export default new Vuex.Store({
       commit('ADD_LOG', 'Generating new quote...');
       
       try {
-        const response = await fetch("/api/qotd");
+        const response = await fetch("https://favqs.com/api/qotd");
         const polishedResponse = await response.json();
         commit('SET_CURRENT_QUOTE', polishedResponse);
         commit('ADD_LOG', `Quote generated: ${polishedResponse.quote.body}`);
