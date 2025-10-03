@@ -107,7 +107,6 @@ export default {
         };
         this.$store.commit('ADD_FAVORITE', newFavorite);
         this.$store.commit('ADD_LOG', `Quote added to favorites: ${newFavorite.quote}`);
-        this.$store.commit('ADD_LOG', `Total favorites: ${this.favoriteQuotes.length + 1}`);
         this.quoteInsertCount++;
       } else {
         this.$store.commit('ADD_LOG', 'Quote already in favorites or already added');

@@ -52,13 +52,11 @@ export default {
         quote.author.toLowerCase().includes(query)
       )
       this.$store.commit('ADD_LOG', `Search query: ${this.searchQuery}`);
-      this.$store.commit('ADD_LOG', `Filtered results: ${filtered.length}`);
       return filtered
     }
   },
   created() {
     this.$store.commit('ADD_LOG', 'Favorites page loaded');
-    this.$store.commit('ADD_LOG', `Current favorites: ${this.favoriteQuotes.length}`);
   },
   methods: {
     
