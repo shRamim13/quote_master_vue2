@@ -7,11 +7,11 @@
     </div>
 
     <div>
-      <div v-for="(log, index) in store.logs" :key="index">
+      <div v-for="(log, index) in logs" :key="index">
         {{ log }}
       </div>
 
-      <div v-if="store.logs.length === 0">
+      <div v-if="logs.length === 0">
         <p>No logs yet</p>
       </div>
     </div>
@@ -24,24 +24,19 @@
 
 <script>
 import QuoteButton from "@/components/QuoteButton.vue";
-import { store } from "@/store.js";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: "LogsPage",
   components: { QuoteButton },
   computed: {
-    store() {
-      return store;
-    },
-  },
-  created() {
-    store.addLog("Logs page loaded");
+    ...mapState(['logs'])
   },
   methods: {
-    clearLogs() {
-      store.clearLogs();
-      store.addLog("Logs cleared");
-    },
+    ...mapActions(['addLog', 'clearLogs'])
   },
+  created() {
+    this.addLog("Logs page loaded");
+  }
 };
 </script>
